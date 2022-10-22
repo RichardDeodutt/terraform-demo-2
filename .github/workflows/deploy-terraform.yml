@@ -13,7 +13,7 @@ jobs:
         run: |
           cd aws-infra
           terraform init
-          terraform plan
-          terraform apply --auto-approve
-          ls
-          terraform destroy --auto-approve
+          terraform validate
+#          terraform apply --auto-approve
+          ls -la
+#          terraform destroy --auto-approve

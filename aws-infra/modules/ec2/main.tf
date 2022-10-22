@@ -14,7 +14,7 @@ resource "aws_security_group" "project-iac-sg" {
   // To Allow Port 80 Transport
   ingress {
     from_port = 80
-    protocol = ""
+    protocol = "tcp"
     to_port = 80
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -35,7 +35,7 @@ resource "aws_security_group" "project-iac-sg" {
 resource "aws_instance" "project-iac" {
   ami = lookup(var.ec2props, "ami")
   instance_type = lookup(var.ec2props, "itype")
-  subnet_id = lookup(var.ec2props, "subnet") #FFXsubnet2
+  subnet_id = var.subnet
   associate_public_ip_address = lookup(var.ec2props, "publicip")
   key_name = lookup(var.ec2props, "keyname")
 
@@ -45,7 +45,7 @@ resource "aws_instance" "project-iac" {
   ]
   root_block_device {
     delete_on_termination = true
-    iops = 150
+    #iops = 150
     volume_size = 50
     volume_type = "gp2"
   }

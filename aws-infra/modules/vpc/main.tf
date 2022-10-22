@@ -51,8 +51,3 @@
    allocation_id = aws_eip.nateIP.id
    subnet_id = aws_subnet.publicsubnets.id
  }
- 
- output "vpc_id" {
-    value = aws_vpc.Main.id
-   
- }

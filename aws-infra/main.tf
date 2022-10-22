@@ -7,16 +7,17 @@ module "createVpc" {
 }
 
 
-# module "createEC2-frontend"{
-#     source = "./modules/ec2"
-#     ec2props = var.ec2props
-#     # vpc_id = module.createVpc.Main.id
+module "createEC2-frontend"{
+    source = "./modules/ec2"
+    ec2props = var.ec2props
+    subnet = module.createVpc.public_subnets_id
+    vpc_id = module.createVpc.vpc_id
 
-#     depends_on = [
-#       module.createVpc
-#     ]
-# }
+    depends_on = [
+      module.createVpc
+    ]
+}
 
-# output "lookingintocreatevpc" {
-#         value = module.createEC2-frontend.vpc_id
-# }
+output "lookingintocreatevpc" {
+        value = module.createEC2-frontend.ec2instance_public_id
+}
