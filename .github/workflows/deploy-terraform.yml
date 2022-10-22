@@ -4,17 +4,21 @@ on:
     branches: 
       - main
 
+env: 
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
 jobs: 
   run-terraform-test: 
     name: Run Terraform Test
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./aws-infra
     steps: 
-    - name: Checkout
-      shell: bash
     - uses: actions/checkout@v3
-      env: 
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      name: Checkout
     - name: Init
       run: terraform init
     - name: Validate
@@ -23,4 +27,3 @@ jobs:
       run: terraform apply --auto-approve
     - name: Destroy
       run: terraform destroy --auto-approve
-    working-directory: aws-infra
