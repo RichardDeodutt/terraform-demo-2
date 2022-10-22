@@ -18,12 +18,12 @@ jobs:
         working-directory: ./aws-infra
     steps: 
     - uses: actions/checkout@v3
-      name: Checkout
-    - name: Init
+      name: GitHub Checkout
+    - name: Terraform Init
       run: terraform init
-    - name: Validate
+    - name: Terraform Validate
       run: terraform validate
-    - name: Apply
+    - name: Terraform Apply
       run: terraform apply --auto-approve
-    - name: Destroy
+    - name: Terraform Destroy
       run: terraform destroy --auto-approve
