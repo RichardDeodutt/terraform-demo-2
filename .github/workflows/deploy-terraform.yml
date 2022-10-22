@@ -14,4 +14,6 @@ jobs:
           cd aws-infra
           terraform init
           terraform plan
-          terraform --auto-approve
+          terraform apply --auto-approve
+          ls
+          terraform destroy --auto-approve
