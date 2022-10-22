@@ -9,8 +9,11 @@ jobs:
     name: Run Terraform Test
     runs-on: ubuntu-latest
     steps: 
-      - name: Create Infra Test
+      - name: Checkout
       - uses: actions/checkout@v3
+
+    steps: 
+      - name: Init
       - shell: bash
         env: 
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -18,6 +21,30 @@ jobs:
         run: |
           cd aws-infra
           terraform init
+
+    steps: 
+      - name: Validate
+      - shell: bash
+        run: |
+          cd aws-infra
           terraform validate
+
+    steps: 
+      - name: Apply
+      - shell: bash
+        env: 
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          cd aws-infra
           terraform apply --auto-approve
+
+    steps: 
+      - name: Destroy
+      - shell: bash
+        env: 
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          cd aws-infra
           terraform destroy --auto-approve
